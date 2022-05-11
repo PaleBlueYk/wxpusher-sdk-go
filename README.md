@@ -10,7 +10,7 @@ go get -u github.com/PaleBlueYk/wxpusher-sdk-go
 ```
 
 ```sh
-go get github.com/PaleBlueYk/wxpusher-sdk-go@v1.0.5
+go get github.com/PaleBlueYk/wxpusher-sdk-go@v1.0.6
 ```
 
 引入
