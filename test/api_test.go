@@ -4,8 +4,8 @@ import (
 	"os"
 	"testing"
 
-	"github.com/wxpusher/wxpusher-sdk-go"
-	"github.com/wxpusher/wxpusher-sdk-go/model"
+	"github.com/PaleBlueYk/wxpusher-sdk-go"
+	//"github.com/PaleBlueYk/wxpusher-sdk-go/wxpusher"
 )
 
 func TestSendMessage(t *testing.T) {
