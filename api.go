@@ -4,7 +4,7 @@ import (
 	"bytes"
 	"encoding/json"
 	"errors"
-	"github.com/PaleBlueYk/wxpusher-sdk-go/wxpusher"
+	"github.com/PaleBlueYk/wxpusher-sdk-go/msg"
 	"io/ioutil"
 	"net/http"
 	"strconv"
@@ -27,8 +27,8 @@ const URLCreateQrcode = URLBase + "/api/fun/create/qrcode"
 const URLQueryWxUser = URLBase + "/api/fun/wxuser"
 
 // SendMessage 发送消息
-func SendMessage(message *wxpusher.Message) ([]wxpusher.SendMsgResult, error) {
-	msgResults := make([]wxpusher.SendMsgResult, 0)
+func SendMessage(message *msg.Message) ([]msg.SendMsgResult, error) {
+	msgResults := make([]msg.SendMsgResult, 0)
 	// 校验消息内容
 	err := message.Check()
 	if err != nil {
@@ -38,59 +38,59 @@ func SendMessage(message *wxpusher.Message) ([]wxpusher.SendMsgResult, error) {
 	requestBody, _ := json.Marshal(message)
 	resp, err := http.Post(URLSendMessage, "application/json", bytes.NewReader(requestBody))
 	if err != nil {
-		return msgResults, wxpusher.NewSDKError(err)
+		return msgResults, msg.NewSDKError(err)
 	}
 	defer func() { _ = resp.Body.Close() }()
 	respBody, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
-		return msgResults, wxpusher.NewSDKError(err)
+		return msgResults, msg.NewSDKError(err)
 	}
-	result := wxpusher.Result{}
+	result := msg.Result{}
 	err = json.Unmarshal(respBody, &result)
 	if err != nil {
-		return msgResults, wxpusher.NewSDKError(err)
+		return msgResults, msg.NewSDKError(err)
 	}
 	if !result.Success() {
-		return msgResults, wxpusher.NewError(result.Code, errors.New(result.Msg))
+		return msgResults, msg.NewError(result.Code, errors.New(result.Msg))
 	}
 	// result.Data 转为[]model.SendMsgResult
 	byteData, err := json.Marshal(result.Data)
 	if err != nil {
-		return msgResults, wxpusher.NewSDKError(err)
+		return msgResults, msg.NewSDKError(err)
 	}
 	err = json.Unmarshal(byteData, &msgResults)
 	if err != nil {
-		return msgResults, wxpusher.NewSDKError(err)
+		return msgResults, msg.NewSDKError(err)
 	}
 	return msgResults, nil
 }
 
 // QueryMessageStatus 查询消息发送状态
-func QueryMessageStatus(messageID int) (wxpusher.Result, error) {
-	var result wxpusher.Result
+func QueryMessageStatus(messageID int) (msg.Result, error) {
+	var result msg.Result
 	url := strings.ReplaceAll(URLMessageStatus, "${messageID}", strconv.Itoa(messageID))
 	resp, err := http.Get(url)
 	if err != nil {
-		return result, wxpusher.NewSDKError(err)
+		return result, msg.NewSDKError(err)
 	}
 	defer func() { _ = resp.Body.Close() }()
 	respBody, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
-		return result, wxpusher.NewSDKError(err)
+		return result, msg.NewSDKError(err)
 	}
 	err = json.Unmarshal(respBody, &result)
 	if err != nil {
-		return result, wxpusher.NewSDKError(err)
+		return result, msg.NewSDKError(err)
 	}
 	if !result.Success() {
-		return result, wxpusher.NewError(result.Code, errors.New(result.Msg))
+		return result, msg.NewError(result.Code, errors.New(result.Msg))
 	}
 	return result, nil
 }
 
 // CreateQrcode 创建参数二维码
-func CreateQrcode(qrcode *wxpusher.Qrcode) (wxpusher.CreateQrcodeResult, error) {
-	var qrResult wxpusher.CreateQrcodeResult
+func CreateQrcode(qrcode *msg.Qrcode) (msg.CreateQrcodeResult, error) {
+	var qrResult msg.CreateQrcodeResult
 	err := qrcode.Check()
 	if err != nil {
 		return qrResult, err
@@ -98,36 +98,36 @@ func CreateQrcode(qrcode *wxpusher.Qrcode) (wxpusher.CreateQrcodeResult, error) 
 	requestBody, _ := json.Marshal(qrcode)
 	resp, err := http.Post(URLCreateQrcode, "application/json", bytes.NewReader(requestBody))
 	if err != nil {
-		return qrResult, wxpusher.NewSDKError(err)
+		return qrResult, msg.NewSDKError(err)
 	}
 	defer func() { _ = resp.Body.Close() }()
 	respBody, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
-		return qrResult, wxpusher.NewSDKError(err)
+		return qrResult, msg.NewSDKError(err)
 	}
-	result := wxpusher.Result{}
+	result := msg.Result{}
 	err = json.Unmarshal(respBody, &result)
 	if err != nil {
-		return qrResult, wxpusher.NewSDKError(err)
+		return qrResult, msg.NewSDKError(err)
 	}
 	if !result.Success() {
-		return qrResult, wxpusher.NewError(result.Code, errors.New(result.Msg))
+		return qrResult, msg.NewError(result.Code, errors.New(result.Msg))
 	}
 	// result.Data 转为model.CreateQrcodeResult
 	byteData, err := json.Marshal(result.Data)
 	if err != nil {
-		return qrResult, wxpusher.NewSDKError(err)
+		return qrResult, msg.NewSDKError(err)
 	}
 	err = json.Unmarshal(byteData, &qrResult)
 	if err != nil {
-		return qrResult, wxpusher.NewSDKError(err)
+		return qrResult, msg.NewSDKError(err)
 	}
 	return qrResult, nil
 }
 
 // QueryWxUser 查询App的关注用户
-func QueryWxUser(appToken string, page, pageSize int) (wxpusher.QueryWxUserResult, error) {
-	var queryResult wxpusher.QueryWxUserResult
+func QueryWxUser(appToken string, page, pageSize int) (msg.QueryWxUserResult, error) {
+	var queryResult msg.QueryWxUserResult
 	req, _ := http.NewRequest("GET", URLQueryWxUser, nil)
 	q := req.URL.Query()
 	q.Add("appToken", appToken)
@@ -137,26 +137,26 @@ func QueryWxUser(appToken string, page, pageSize int) (wxpusher.QueryWxUserResul
 	client := &http.Client{}
 	resp, err := client.Do(req)
 	if err != nil {
-		return queryResult, wxpusher.NewSDKError(err)
+		return queryResult, msg.NewSDKError(err)
 	}
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
-		return queryResult, wxpusher.NewSDKError(err)
+		return queryResult, msg.NewSDKError(err)
 	}
 	defer func() { _ = resp.Body.Close() }()
-	result := wxpusher.Result{}
+	result := msg.Result{}
 	err = json.Unmarshal(body, &result)
 	if err != nil {
-		return queryResult, wxpusher.NewSDKError(err)
+		return queryResult, msg.NewSDKError(err)
 	}
 	// result.Data 转为model.QueryWxUserResult
 	byteData, err := json.Marshal(result.Data)
 	if err != nil {
-		return queryResult, wxpusher.NewSDKError(err)
+		return queryResult, msg.NewSDKError(err)
 	}
 	err = json.Unmarshal(byteData, &queryResult)
 	if err != nil {
-		return queryResult, wxpusher.NewSDKError(err)
+		return queryResult, msg.NewSDKError(err)
 	}
 	return queryResult, nil
 }

@@ -1,4 +1,4 @@
-package wxpusher
+package msg
 
 import "fmt"
 
