@@ -1,3 +1,3 @@
-module github.com/wxpusher/wxpusher-sdk-go
+module github.com/PaleBlueYk/wxpusher-sdk-go
 
 go 1.13
