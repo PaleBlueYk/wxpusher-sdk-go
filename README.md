@@ -6,19 +6,19 @@
 ## 安装
 
 ```sh
-go get -u github.com/wxpusher/wxpusher-sdk-go
+go get -u github.com/PaleBlueYk/wxpusher-sdk-go
 ```
 
 ```sh
-go get github.com/wxpusher/wxpusher-sdk-go@v1.0.3
+go get github.com/PaleBlueYk/wxpusher-sdk-go@v1.0.3
 ```
 
 引入
 
 ```go
 import (
-	"github.com/wxpusher/wxpusher-sdk-go"
-	"github.com/wxpusher/wxpusher-sdk-go/wxpusher"
+	"github.com/PaleBlueYk/wxpusher-sdk-go"
+	"github.com/PaleBlueYk/wxpusher-sdk-go/wxpusher"
 )
 ```
 
