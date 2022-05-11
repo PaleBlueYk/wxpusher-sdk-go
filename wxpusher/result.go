@@ -1,4 +1,4 @@
-package model
+package wxpusher
 
 // Result 接口返回结果
 type Result struct {

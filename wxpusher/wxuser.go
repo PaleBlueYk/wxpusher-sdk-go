@@ -1,4 +1,4 @@
-package model
+package wxpusher
 
 // WxUser 微信用户
 type WxUser struct {

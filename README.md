@@ -1,4 +1,5 @@
 # wxpusher-client
+> 个人定制修改，由于个人常用wxpusher，所以修改包名
 
 [zjiecode/wxpusher-client](https://github.com/zjiecode/wxpusher-client)的 Go 语言版本
 
@@ -17,14 +18,14 @@ go get github.com/wxpusher/wxpusher-sdk-go@v1.0.3
 ```go
 import (
 	"github.com/wxpusher/wxpusher-sdk-go"
-	"github.com/wxpusher/wxpusher-sdk-go/model"
+	"github.com/wxpusher/wxpusher-sdk-go/wxpusher"
 )
 ```
 
 ## 发送消息
 
 ```go
-msg := model.NewMessage(appToken).SetContent("测试").AddUId(uId)
+msg := wxpusher.NewMessage(appToken).SetContent("测试").AddUId(uId)
 msgArr, err := wxpusher.SendMessage(msg)
 fmt.Println(msgArr, err)
 ```
@@ -39,7 +40,7 @@ fmt.Println(status, err)
 ## 创建参数二维码
 
 ```go
-qrcode := model.Qrcode{AppToken: appToken, Extra: "XX渠道用户"}
+qrcode := wxpusher.Qrcode{AppToken: appToken, Extra: "XX渠道用户"}
 qrcodeResp, err := wxpusher.CreateQrcode(&qrcode)
 fmt.Println(qrcodeResp, err)
 ```

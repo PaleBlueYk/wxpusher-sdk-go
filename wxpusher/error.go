@@ -1,4 +1,4 @@
-package model
+package wxpusher
 
 import "fmt"
 

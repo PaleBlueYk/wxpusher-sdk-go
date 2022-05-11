@@ -9,7 +9,7 @@ import (
 )
 
 func TestSendMessage(t *testing.T) {
-	msg := model.NewMessage(os.Getenv("appToken")).SetContent("测试消息").SetSummary("这是摘要").AddUId(os.Getenv("UID"))
+	msg := wxpusher.NewMessage(os.Getenv("appToken")).SetContent("测试消息").SetSummary("这是摘要").AddUId(os.Getenv("UID"))
 	result, err := wxpusher.SendMessage(msg)
 	if err != nil {
 		t.Fatal(err)
@@ -18,7 +18,7 @@ func TestSendMessage(t *testing.T) {
 }
 
 func TestSendTopic(t *testing.T) {
-	msg := model.NewMessage(os.Getenv("appToken")).SetContent("测试消息").SetSummary("这是摘要").AddTopicId(640)
+	msg := wxpusher.NewMessage(os.Getenv("appToken")).SetContent("测试消息").SetSummary("这是摘要").AddTopicId(640)
 	result, err := wxpusher.SendMessage(msg)
 	if err != nil {
 		t.Fatal(err)
@@ -36,7 +36,7 @@ func TestQueryMessageStatus(t *testing.T) {
 }
 
 func TestCreateQrcode(t *testing.T) {
-	qrcode := model.Qrcode{
+	qrcode := wxpusher.Qrcode{
 		AppToken: os.Getenv("appToken"),
 		Extra:    "参数",
 	}
