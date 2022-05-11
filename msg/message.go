@@ -33,6 +33,10 @@ func NewMessage(appToken string) *Message {
 	}
 }
 
+// SetContentType
+/**
+** ct: 内容类型 1表示文字  2表示html(只发送body标签内部的数据即可，不包括body标签) 3表示markdown
+ */
 func (m *Message) SetContentType(ct int) *Message {
 	m.ContentType = ct
 	return m
